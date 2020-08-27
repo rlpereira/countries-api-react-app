@@ -1,25 +1,78 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+import { useState, useEffect } from 'react';
+import { ThemeProvider } from 'emotion-theming';
+
+import Header from './components/Header/Header';
+import Layout from './components/Layout/Layout';
+import List from './components/List/List';
+
+import { stylesContainer, stylesRow } from './styles/global.styles';
+import themes from './styles/themes';
+import Loader from './components/Loader/Loader';
+import Form from './components/Form/Form';
 
 function App() {
+  const [theme, setTheme] = useState(themes.dark);
+  const [loading, setLoading] = useState(true);
+  const [countries, setCountries] = useState([]);
+  const [region, setRegion] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const toggleTheme = () => {
+    setTheme(theme.label === 'light' ? themes.dark : themes.light);
+  };
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filterByRegion = (ev) => {
+    setRegion(ev.target.value);
+  };
+
+  useEffect(() => {
+    const baseUrl = 'https://restcountries.eu/rest/v2/';
+    const fields = 'fields=name;alpha3Code;capital;flag;population;region';
+    const url =
+      region === 'all'
+        ? `${baseUrl}?${fields}`
+        : `${baseUrl}region/${region}?${fields}`;
+
+    setLoading(true);
+
+    fetch(url)
+      .then((data) => data.json())
+      .then((result) => {
+        setCountries(result);
+        setLoading(false);
+      });
+  }, [region]);
+
+  const filteredCountries = !searchTerm
+    ? countries
+    : countries.filter((country) =>
+        country.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+      );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Layout />
+      <Header toggleTheme={toggleTheme} />
+      <div css={stylesContainer}>
+        <div css={stylesRow({ justifyContent: 'flex-start' })}>
+          <Form
+            handleChange={handleChange}
+            filterByRegion={filterByRegion}
+            region={region}
+            searchTerm={searchTerm}
+          />
+        </div>
+        <div css={stylesRow}>
+          {loading ? <Loader /> : <List countries={filteredCountries} />}
+        </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
