@@ -22,7 +22,7 @@ function Country({ country }) {
             <img
               css={stylesImage}
               src={country.flag}
-              alt={country.alpha3Code}
+              alt={country.name}
             />
           </LazyLoad>
           <div css={stylesCardContent}>
