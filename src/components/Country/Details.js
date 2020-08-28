@@ -30,7 +30,7 @@ function Details({ country }) {
         <img
           css={stylesImage({ width: '100%', height: 'auto' })}
           src={flag}
-          alt={alpha3code}
+          alt={name}
         />
       </div>
       <div css={stylesColumn}>

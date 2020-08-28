@@ -19,11 +19,7 @@ function Country({ country }) {
       <div css={stylesCard({ theme: theme })}>
         <Link css={stylesLink} to={`/details/${country.alpha3Code}`}>
           <LazyLoad height={240}>
-            <img
-              css={stylesImage}
-              src={country.flag}
-              alt={country.name}
-            />
+            <img css={stylesImage} src={country.flag} alt={country.name} />
           </LazyLoad>
           <div css={stylesCardContent}>
             <h2>{country.name}</h2>
