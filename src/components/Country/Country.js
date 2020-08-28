@@ -12,7 +12,7 @@ function Country({ country }) {
     <li>
       <div css={stylesCard({ theme:  theme })}>
         <LazyLoad height={240}>
-          <img css={stylesImage} src={country.flag} alt={country.alpha3Code} />
+          <img lazyload css={stylesImage} src={country.flag} alt={country.alpha3Code} />
         </LazyLoad>
         <div
           css={stylesCardContent}
