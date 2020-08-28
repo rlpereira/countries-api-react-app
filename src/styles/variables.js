@@ -22,7 +22,7 @@ export default {
     },
   },
   breakpoints: {
-    mobile: '375px',
-    desktop: '1440px',
+    mobile: 375,
+    desktop: 1024,
   },
 };

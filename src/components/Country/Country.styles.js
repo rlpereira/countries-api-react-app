@@ -14,8 +14,21 @@ export const stylesCardContent = css`
   padding: 8px 16px;
 `;
 
-export const stylesImage = css`
-  width: 100%;
-  height: 240px;
+export const stylesImage = ({ width = '100%', height = '240px' }) => css`
+  width: ${width};
+  height: ${height};
+  min-height: 240px;
   object-fit: cover;
+`;
+
+export const stylesLink = css`
+  text-decoration: none;
+  color: inherit;
+`;
+
+export const stylesBorderList = css`
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
