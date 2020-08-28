@@ -7,6 +7,14 @@ export const stylesForm = css`
   margin: 32px 16px;
 `;
 
+export const stylesLabel = css`
+  width: 0;
+  height: 0;
+  position: relative;
+  background: red;
+  overflow: hidden;
+`;
+
 export const stylesInput = (theme) => css`
   width: 320px;
   height: 40px;

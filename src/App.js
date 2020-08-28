@@ -1,16 +1,17 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { ThemeProvider } from 'emotion-theming';
 
 import Header from './components/Header/Header';
 import Layout from './components/Layout/Layout';
-import List from './components/List/List';
 
 import { stylesContainer, stylesRow } from './styles/global.styles';
 import themes from './styles/themes';
 import Loader from './components/Loader/Loader';
 import Form from './components/Form/Form';
+
+const List = React.lazy(() => import('./components/List/List'));
 
 function App() {
   const [theme, setTheme] = useState(themes.dark);
@@ -69,7 +70,9 @@ function App() {
           />
         </div>
         <div css={stylesRow}>
-          {loading ? <Loader /> : <List countries={filteredCountries} />}
+          <Suspense fallback={<Loader />}>
+            {loading ? <Loader /> : <List countries={filteredCountries} />}
+          </Suspense>
         </div>
       </div>
     </ThemeProvider>

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { stylesForm, stylesInput } from './Form.styles';
+import { stylesForm, stylesInput, stylesLabel } from './Form.styles';
 
 function Form({ searchTerm, handleChange, region, filterByRegion }) {
   const options = [
@@ -23,7 +23,19 @@ function Form({ searchTerm, handleChange, region, filterByRegion }) {
         onChange={handleChange}
         css={stylesInput}
       />
-      <select css={stylesInput} onChange={filterByRegion} value={region}>
+      <label css={stylesLabel} htmlFor='search'>
+        Search:{' '}
+      </label>
+      <label css={stylesLabel} htmlFor='region'>
+        Search:{' '}
+      </label>
+      <select
+        name='region'
+        id='region'
+        css={stylesInput}
+        onChange={filterByRegion}
+        value={region}
+      >
         {options.map((option) => (
           <option key={option.key}>{option.value}</option>
         ))}
