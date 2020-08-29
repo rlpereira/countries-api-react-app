@@ -12,7 +12,6 @@ function Details({ country }) {
   const {
     name,
     flag,
-    alpha3code,
     nativeName,
     population,
     region,
@@ -38,7 +37,7 @@ function Details({ country }) {
         <p>Native name: {nativeName}</p>
         <p>Population: {population}</p>
         <p>Region: {region}</p>
-        <p>Sub region: {subregion}</p>
+        {subregion && <p>Sub region: {subregion}</p>}
         <p>Capital: {capital}</p>
         <p>Top level domain: {topLevelDomain.join(' ')}</p>
         <p>Currencies: {currencies.map((c) => c.name).join(' ')}</p>
@@ -46,6 +45,9 @@ function Details({ country }) {
 
         <h2>Borders:</h2>
         <ul css={stylesBorderList}>
+          {!borders || borders.length === 0
+            ? 'This country has no country borders.'
+            : ''}
           {borders.map((borderCountry) => (
             <li key={borderCountry}>
               <Link to={`/details/${borderCountry}`}>

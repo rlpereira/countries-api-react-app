@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useTheme } from 'emotion-theming';
 
@@ -10,6 +10,7 @@ import {
   stylesRow,
   stylesButton,
 } from '../styles/global.styles';
+import useFetch from '../api/useFetch';
 
 const CountryDetails = React.lazy(() =>
   import('../components/Country/Details')
@@ -18,29 +19,20 @@ const CountryDetails = React.lazy(() =>
 function Details() {
   const theme = useTheme();
   const { code } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [country, setCountry] = useState(null);
 
-  useEffect(() => {
-    const baseUrl = 'https://restcountries.eu/rest/v2/';
-    const fields =
-      'fields=name;alpha3Code;capital;flag;population;region;nativeName;subRegion;currencies;languages;topLevelDomain;borders';
-    const url = `${baseUrl}alpha/${code}?${fields}`;
+  const baseUrl = 'https://restcountries.eu/rest/v2/';
+  const fields =
+    'fields=name;alpha3Code;capital;flag;population;region;nativeName;subRegion;currencies;languages;topLevelDomain;borders';
+  const url = `${baseUrl}alpha/${code}?${fields}`;
 
-    setLoading(true);
+  const { status, data, error } = useFetch(url);
 
-    if (code) {
-      fetch(url)
-        .then((data) => data.json())
-        .then((result) => {
-          setCountry(result);
-          setLoading(false);
-        });
-    }
-  }, [code]);
-
-  if (loading) {
+  if (status === 'fetching') {
     return 'Loading...';
+  }
+
+  if (error) {
+    return `${error.message}`;
   }
 
   return (
@@ -54,7 +46,7 @@ function Details() {
       </div>
       <div css={stylesRow}>
         <Suspense fallback={'Loading...'}>
-          <CountryDetails country={country} />
+          <CountryDetails country={data} />
         </Suspense>
       </div>
     </div>
