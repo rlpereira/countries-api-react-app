@@ -4,6 +4,8 @@ import { jsx } from '@emotion/core';
 import { stylesHeader, stylesheaderWrapper } from './Header.styles';
 import { useTheme } from 'emotion-theming';
 
+import { stylesButton } from '../../styles/global.styles';
+
 function Header({ toggleTheme }) {
   const theme = useTheme();
 
@@ -14,7 +16,12 @@ function Header({ toggleTheme }) {
     >
       <div css={stylesheaderWrapper}>
         <h1>Where in the world?</h1>
-        <button onClick={toggleTheme}>{theme.btnText}</button>
+        <button
+          css={stylesButton({ theme: theme, margin: '32px 16px' })}
+          onClick={toggleTheme}
+        >
+          {theme.btnText}
+        </button>
       </div>
     </header>
   );

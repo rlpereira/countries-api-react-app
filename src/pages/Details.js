@@ -5,11 +5,13 @@ import React, { Suspense } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useTheme } from 'emotion-theming';
 
+import Loader from '../components/Loader/Loader';
 import {
   stylesContainer,
   stylesRow,
   stylesButton,
 } from '../styles/global.styles';
+
 import useFetch from '../api/useFetch';
 
 const CountryDetails = React.lazy(() =>
@@ -28,7 +30,7 @@ function Details() {
   const { status, data, error } = useFetch(url);
 
   if (status === 'fetching') {
-    return 'Loading...';
+    return <Loader simple />;
   }
 
   if (error) {
@@ -45,7 +47,7 @@ function Details() {
         </Link>
       </div>
       <div css={stylesRow}>
-        <Suspense fallback={'Loading...'}>
+        <Suspense fallback={<Loader />}>
           <CountryDetails country={data} />
         </Suspense>
       </div>

@@ -39,16 +39,16 @@ function Details({ country }) {
         <p>Region: {region}</p>
         {subregion && <p>Sub region: {subregion}</p>}
         <p>Capital: {capital}</p>
-        <p>Top level domain: {topLevelDomain.join(' ')}</p>
-        <p>Currencies: {currencies.map((c) => c.name).join(' ')}</p>
-        <p>Languages: {languages.map((l) => l.name).join(' ')}</p>
+        <p>Top level domain: {topLevelDomain && topLevelDomain.join(' ')}</p>
+        <p>Currencies: {currencies && currencies.map((c) => c.name).join(' ')}</p>
+        <p>Languages: {languages && languages.map((l) => l.name).join(' ')}</p>
 
         <h2>Borders:</h2>
         <ul css={stylesBorderList}>
           {!borders || borders.length === 0
             ? 'This country has no country borders.'
             : ''}
-          {borders.map((borderCountry) => (
+          {borders && borders.map((borderCountry) => (
             <li key={borderCountry}>
               <Link to={`/details/${borderCountry}`}>
                 <button css={stylesButton({ theme: theme })}>
