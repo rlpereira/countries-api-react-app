@@ -40,6 +40,9 @@ function Form({ searchTerm, handleChange, region, filterByRegion }) {
           <option key={option.key}>{option.value}</option>
         ))}
       </select>
+      <button style={{ display: 'none' }} type='submit'>
+        &nbsp;
+      </button>
     </form>
   );
 }
