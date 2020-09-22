@@ -15,9 +15,9 @@ const useFetch = (url) => {
         const response = await fetch(url);
         console.log(response);
         if (response.ok) {
-          const data = await response.json();
+          const result = await response.json();
 
-          setData(data);
+          setData(result);
           setError(null);
           setStatus('fetched');
         } else {
